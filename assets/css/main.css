@@ -353,6 +353,14 @@ button.header__navbar-item-btn:focus {
 
 /* =========header nav main=========== */
 
+.show {
+    color: black;
+    font-size: 16px;
+    margin: 24px 16px 10px 132px;
+    font-weight: 700;
+    text-align: start;
+}
+
 .header__category-icon {
     color: #333;
 }
@@ -426,10 +434,19 @@ button.header__navbar-item-btn:focus {
     z-index: 100;
 }
 
-.user__action-list li {
-    color: var(--white-color);
-    padding: 4px 0;
-    font-size: 10px;
+.user_action-item:first-child,
+.user_action-item:last-child {
+    margin: 0px 0;
+}
+
+.user_action-item {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.user_action-item a {
+    color: #f20e74;
+    font-size: 12px;
 }
 
 #flagElement {

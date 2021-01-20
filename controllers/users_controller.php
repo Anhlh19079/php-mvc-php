@@ -13,11 +13,17 @@ class UsersController extends BaseController {
   //   $this->render('index', $data);
   // }
 
-  // public function showUser() {
-  //   $user = User::find($_GET['id']);
-  //   $data = array('user' => $user);
-  //   $this->render('user_details', $data);
-  // }
+  public function showUser() {
+    if (isset($_SESSION['cust_id'])) {
+    $user = User::find($_SESSION['cust_id']);
+    if ($user === false ) {
+      echo 'loixxxxx';
+    }
+    $data = array('user' => $user);
+    $this->render('user_details', $data);
+    }
+    
+  }
 
   public function insertUser(){
     // $result =[];

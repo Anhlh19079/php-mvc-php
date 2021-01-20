@@ -7,6 +7,8 @@ include_once("models/user.php");
 <?php
 if(session_id() ===''){
     session_start();
+}else{
+    // session_start();
 }
 ?>
 
@@ -19,9 +21,14 @@ if ($loginacc == false) {
 
     echo '<script>alert("sai email hoac mat khau")</script>';
 }
-        // header("Location: " . $_SERVER['PHP_SELF']);
+        header("Location: " . $_SERVER['PHP_SELF']);
     } else if (isset($_POST['logout']) && $_POST['logout']) {
         session_destroy();
+        unset($_SESSION["cust_id"]);
+unset($_SESSION["cust_name"]);
+unset($_SESSION["cust_email"]);
+unset($_SESSION["cust_address"]);
+unset($_SESSION["cust_status"]);
         header("Location: " . $_SERVER['PHP_SELF']);
     }
 }
@@ -216,7 +223,7 @@ if ($loginacc == false) {
                         </a>
                         <ul class="user__action-list triangle">
                             <li class="user_action-item">
-                                <a href="#" class="user__action-item-link">
+                                <a href="index.php?controller=users&action=showUser&id=<?php echo $_SESSION['cust_id']; ?>" class="user__action-item-link">
                                     Tài khoản của tôi
                                 </a>
                             </li>
@@ -227,7 +234,7 @@ if ($loginacc == false) {
                             </li>
                             <li class="user_action-item">
                                 <form action="" method="post">
-                                    <button type="submit" value="true" name="logout" class="b-0 user__action-item-link">
+                                    <button type="submit" value="true" name="logout" class="form__group-input user__action-item-link">
                                         Đăng Xuất
                                     </button>
                                 </form>

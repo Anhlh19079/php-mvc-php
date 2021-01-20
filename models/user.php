@@ -4,12 +4,13 @@ class User
   public $cust_id;
   public $cust_name;
   public $cust_email;
-
-  function __construct($cust_id, $cust_name, $cust_email)
+  public $cust_address;
+  function __construct($cust_id, $cust_name, $cust_email, $cust_address)
   {
     $this->cust_id = $cust_id;
     $this->cust_name = $cust_name;
     $this->cust_email = $cust_email;
+    $this->cust_address = $cust_address;
   }
  
   static function getAll()
@@ -19,7 +20,7 @@ class User
     $req = $db->query('SELECT * FROM customers');
 
     foreach ($req->fetchAll() as $item) {
-      $list[] = new User($item['cust_id'], $item['cust_name'], $item['cust_email']);
+      $list[] = new User($item['cust_id'], $item['cust_name'], $item['cust_email'], $item['cust_address']);
     }
 
     return $list;
@@ -32,9 +33,9 @@ class User
     $req->execute(array('cust_id' => $cust_id));
     $item = $req->fetch();
     if (isset($item['cust_id'])) {
-      return new User($item['cust_id'], $item['cust_name'], $item['cust_email']);
+      return new User($item['cust_id'], $item['cust_name'], $item['cust_email'], $item['cust_address']);
     }
-    return null;
+    return false;
   }
 
   static function insert($cust_name, $cust_email,$cust_address,$hashed_passcode)
@@ -79,9 +80,11 @@ class User
     }
   }
 
-  public static function update($cust_address,$cust_name)
+  public static function update($cust_name,$cust_address)
   {
+    if(session_id() ===''){
       session_start();
+  }
       $db = DBConnection::getInstance();
       $query = 'UPDATE customers SET cust_name= :cust_name,cust_address = :cust_address WHERE cust_id = :cust_id AND cust_email = :cust_email';
       $stmt = $db->prepare($query);
